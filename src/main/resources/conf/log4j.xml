@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %c{1} - %m%n" />
+        </layout>
+    </appender>
+    <appender name="log" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="log/application.log" />
+        <param name="encoding" value="UTF-8" />
+        <param name="append" value="true" />
+        <param name="MaxFileSize" value="10MB" />
+        <param name="MaxBackupIndex" value="50" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %c{1} - %m%n" />
+        </layout>
+    </appender>
+    <appender name="history" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="history/history.log" />
+        <param name="encoding" value="UTF-8" />
+        <param name="append" value="true" />
+        <param name="datePattern" value="'.'yyyy-MM-dd" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n" />
+        </layout>
+    </appender>
+    <appender name="errormail" class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="1" />
+        <param name="LocationInfo" value="true" />
+        <param name="To" value="yanagawa_keita@yanagawa.co.jp" />
+        <param name="From" value="www@yanagawa.jp" />
+        <param name="Subject" value="[Error] UserSpecifiedTargeting"/>
+        <param name="SMTPHost" value="127.0.0.1" />
+        <param name="Threshold" value="fatal" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m" />
+        </layout>
+    </appender>
+    <logger name="history">
+        <level value="info" />
+        <appender-ref ref="history" />
+    </logger>
+    <root>
+        <level value="info" />
+        <appender-ref ref="stdout" />
+        <appender-ref ref="log" />
+        <appender-ref ref="history" />
+        <appender-ref ref="errormail" />
+    </root>
+</log4j:configuration>

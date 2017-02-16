@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %c{1} - %m%n" />
+        </layout>
+    </appender>
+    <appender name="log" class="org.apache.log4j.RollingFileAppender">
+        <param name="file" value="log/application.log" />
+        <param name="encoding" value="UTF-8" />
+        <param name="append" value="true" />
+        <param name="MaxFileSize" value="10MB" />
+        <param name="MaxBackupIndex" value="50" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %c{1} - %m%n" />
+        </layout>
+    </appender>
+    <appender name="history" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="log/history.log" />
+        <param name="encoding" value="UTF-8" />
+        <param name="append" value="true" />
+        <param name="datePattern" value="'.'yyyy-MM-dd" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n" />
+        </layout>
+    </appender>
+    <logger name="history">
+        <level value="debug" />
+        <appender-ref ref="history" />
+    </logger>
+    <logger name="stdout">
+        <level value="debug" />
+        <appender-ref ref="stdout" />
+    </logger>
+    <logger name="log">
+        <level value="debug" />
+        <appender-ref ref="log" />
+    </logger>
+    <root>
+        <level value="info" />
+        <appender-ref ref="log" />
+        <appender-ref ref="history" />
+        <appender-ref ref="stdout" />
+    </root>
+</log4j:configuration>
